@@ -66,7 +66,9 @@ function App() {
 function App() {
   return (
     <div>
-      <WelcomeMessage/>
+      <WelcomeMessage
+      name="WelcomeMessage"
+      />
     </div>
   )
 }
