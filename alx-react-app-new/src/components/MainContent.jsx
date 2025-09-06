@@ -13,8 +13,7 @@ function MainContent() {
         Explore the World
       </h2>
       <p style={{ textAlign: "center", fontSize: "18px" }}>
-        Travel opens your heart, broadens your mind, and fills your life with
-        stories to tell.
+        I love to visit New York, Paris, and Tokyo.
       </p>
     </main>
   );
