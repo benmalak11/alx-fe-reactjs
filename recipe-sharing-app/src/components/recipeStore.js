@@ -2,17 +2,24 @@
 import create from 'zustand';
 
 export const useRecipeStore = create((set, get) => ({
-  recipes: [],           // All recipes
-  searchTerm: '',        // Current search term
-  filteredRecipes: [],   // Filtered recipes
+  recipes: [],
+  filteredRecipes: [],
+  searchTerm: '',
 
-  // Update search term and filter recipes
+  favorites: [],            // User favorites
+  recommendations: [],      // Recommended recipes
+
+  // Set recipes and update filtered recipes
+  setRecipes: (recipes) => {
+    set({ recipes });
+    get().filterRecipes();
+  },
+
+  // Search and filter
   setSearchTerm: (term) => {
     set({ searchTerm: term });
     get().filterRecipes();
   },
-
-  // Filter recipes based on searchTerm
   filterRecipes: () => {
     const { recipes, searchTerm } = get();
     const lowerTerm = searchTerm.toLowerCase();
@@ -24,9 +31,20 @@ export const useRecipeStore = create((set, get) => ({
     });
   },
 
-  // Set recipes (e.g., from API) and update filteredRecipes
-  setRecipes: (recipes) => {
-    set({ recipes });
-    get().filterRecipes();
-  },
+  // Favorites actions
+  addFavorite: (recipeId) => set(state => ({
+    favorites: [...state.favorites, recipeId]
+  })),
+  removeFavorite: (recipeId) => set(state => ({
+    favorites: state.favorites.filter(id => id !== recipeId)
+  })),
+
+  // Generate mock recommendations based on favorites
+  generateRecommendations: () => {
+    const { recipes, favorites } = get();
+    const recommended = recipes.filter(recipe =>
+      !favorites.includes(recipe.id) && Math.random() > 0.5
+    );
+    set({ recommendations: recommended });
+  }
 }));
