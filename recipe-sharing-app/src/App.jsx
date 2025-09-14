@@ -1,30 +1,23 @@
-import { Routes, Route } from 'react-router-dom';
-import AddRecipeForm from './components/AddRecipeForm';
+import { Routes, Route, Link } from 'react-router-dom';
 import RecipeList from './components/RecipeList';
+import AddRecipeForm from './components/AddRecipeForm';
 import RecipeDetails from './components/RecipeDetails';
 import EditRecipeForm from './components/EditRecipeForm';
 
 function App() {
   return (
-    <div style={{ maxWidth: 800, margin: '0 auto', padding: 24 }}>
-      <h1>🍲 Recipe Sharing App</h1>
+    <div>
+      <h1>Recipe Sharing App</h1>
+      <nav style={{ marginBottom: '20px' }}>
+        <Link to="/">Home</Link> |{" "}
+        <Link to="/add">Add Recipe</Link>
+      </nav>
 
       <Routes>
-        <Route
-          path="/"
-          element={
-            <>
-              <AddRecipeForm />
-              <RecipeList />
-            </>
-          }
-        />
-
-        <Route path="/recipes/:id" element={<RecipeDetails />} />
-        <Route path="/recipes/:id/edit" element={<EditRecipeForm />} />
-
-        {/* fallback */}
-        <Route path="*" element={<p>Page not found</p>} />
+        <Route path="/" element={<RecipeList />} />
+        <Route path="/add" element={<AddRecipeForm />} />
+        <Route path="/recipe/:id" element={<RecipeDetails />} />
+        <Route path="/recipe/:id/edit" element={<EditRecipeForm />} />
       </Routes>
     </div>
   );
