@@ -1,38 +1,23 @@
-import { Link, useParams, useNavigate } from 'react-router-dom';
+// src/components/RecipeDetail.jsx
+import React from 'react';
+import { useParams } from 'react-router-dom';
 import { useRecipeStore } from '../store/recipeStore';
 
-const RecipeDetails = () => {
+const RecipeDetail = () => {
   const { id } = useParams();
-  const recipeId = Number(id);
-  const recipe = useRecipeStore((s) => s.recipes.find((r) => r.id === recipeId));
-  const deleteRecipe = useRecipeStore((s) => s.deleteRecipe);
-  const navigate = useNavigate();
+  const recipe = useRecipeStore(state =>
+    state.recipes.find(r => r.id === parseInt(id))
+  );
 
   if (!recipe) return <p>Recipe not found.</p>;
 
-  const handleDelete = () => {
-    deleteRecipe(recipeId);
-    navigate('/');
-  };
-
   return (
-    <div>
-      <h1>{recipe.title}</h1>
-      <p>{recipe.description}</p>
-
-      {/* ✅ explicitly render recipe.id */}
-      <small>Recipe ID: {recipe.id}</small>
-
-      <div style={{ marginTop: 12 }}>
-        <Link to={`/recipes/${recipe.id}/edit`}>Edit</Link>
-        <button onClick={handleDelete} style={{ marginLeft: 8 }}>
-          Delete
-        </button>
-        <br />
-        <Link to="/">← Back to list</Link>
-      </div>
+    <div className="max-w-md mx-auto p-4 border rounded">
+      <h2 className="text-2xl font-bold mb-2">{recipe.title}</h2>
+      <p><strong>Preparation Time:</strong> {recipe.prepTime} mins</p>
+      <p><strong>Ingredients:</strong> {recipe.ingredients.join(', ')}</p>
     </div>
   );
 };
 
-export default RecipeDetails;
+export default RecipeDetail;

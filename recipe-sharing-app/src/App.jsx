@@ -4,12 +4,13 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useRecipeStore } from './store/recipeStore';
 import SearchBar from './components/SearchBar';
 import RecipeList from './components/RecipeList';
+import AddRecipeForm from './components/AddRecipeForm';
+import RecipeDetail from './components/RecipeDetail';
 
 function HomePage() {
   const setRecipes = useRecipeStore(state => state.setRecipes);
 
   useEffect(() => {
-    // Load initial recipes
     const recipes = [
       { id: 1, title: 'Pasta', prepTime: 20, ingredients: ['pasta', 'tomato'] },
       { id: 2, title: 'Salad', prepTime: 10, ingredients: ['lettuce', 'tomato'] },
@@ -31,7 +32,8 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<HomePage />} />
-        {/* Add more routes here if needed */}
+        <Route path="/add-recipe" element={<AddRecipeForm />} />
+        <Route path="/recipe/:id" element={<RecipeDetail />} />
       </Routes>
     </Router>
   );
