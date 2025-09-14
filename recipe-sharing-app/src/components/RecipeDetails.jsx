@@ -20,8 +20,11 @@ const RecipeDetails = () => {
       <h1>{recipe.title}</h1>
       <p>{recipe.description}</p>
 
+      {/* ✅ explicitly render recipe.id */}
+      <small>Recipe ID: {recipe.id}</small>
+
       <div style={{ marginTop: 12 }}>
-        <Link to={`/recipes/${recipeId}/edit`}>Edit</Link>
+        <Link to={`/recipes/${recipe.id}/edit`}>Edit</Link>
         <button onClick={handleDelete} style={{ marginLeft: 8 }}>
           Delete
         </button>
