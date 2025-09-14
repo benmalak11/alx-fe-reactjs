@@ -1,29 +1,39 @@
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+// src/App.jsx
+import React, { useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { useRecipeStore } from './store/recipeStore';
+import SearchBar from './components/SearchBar';
 import RecipeList from './components/RecipeList';
-import AddRecipeForm from './components/AddRecipeForm';
-import RecipeDetails from './components/RecipeDetails';
-import EditRecipeForm from './components/EditRecipeForm';
+
+function HomePage() {
+  const setRecipes = useRecipeStore(state => state.setRecipes);
+
+  useEffect(() => {
+    // Load initial recipes
+    const recipes = [
+      { id: 1, title: 'Pasta', prepTime: 20, ingredients: ['pasta', 'tomato'] },
+      { id: 2, title: 'Salad', prepTime: 10, ingredients: ['lettuce', 'tomato'] },
+    ];
+    setRecipes(recipes);
+  }, [setRecipes]);
+
+  return (
+    <div className="container mx-auto p-4">
+      <h1 className="text-2xl font-bold mb-4">Recipe Sharing App</h1>
+      <SearchBar />
+      <RecipeList />
+    </div>
+  );
+}
 
 function App() {
   return (
-    <BrowserRouter>
-      <div style={{ maxWidth: 900, margin: '0 auto', padding: 24 }}>
-        <header style={{ marginBottom: 20 }}>
-          <h1>🍲 Recipe Sharing App</h1>
-          <nav>
-            <Link to="/">Home</Link> | <Link to="/add">Add Recipe</Link>
-          </nav>
-        </header>
-
-        <Routes>
-          <Route path="/" element={<><AddRecipeForm /><RecipeList /></>} />
-          <Route path="/add" element={<AddRecipeForm />} />
-          <Route path="/recipe/:id" element={<RecipeDetails />} />
-          <Route path="/recipe/:id/edit" element={<EditRecipeForm />} />
-          <Route path="*" element={<p>Page not found</p>} />
-        </Routes>
-      </div>
-    </BrowserRouter>
+    <Router>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        {/* Add more routes here if needed */}
+      </Routes>
+    </Router>
   );
 }
 

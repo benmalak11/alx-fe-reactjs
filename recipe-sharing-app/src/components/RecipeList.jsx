@@ -1,28 +1,21 @@
-import { Link } from 'react-router-dom';
+// src/components/RecipeList.jsx
+import React from 'react';
 import { useRecipeStore } from '../store/recipeStore';
 
 const RecipeList = () => {
-  const recipes = useRecipeStore((s) => s.recipes);
-  const deleteRecipe = useRecipeStore((s) => s.deleteRecipe);
+  const filteredRecipes = useRecipeStore(state => state.filteredRecipes);
+
+  if (filteredRecipes.length === 0) return <p>No recipes found.</p>;
 
   return (
-    <div>
-      <h2>Recipe List</h2>
-      {recipes.length === 0 ? (
-        <p>No recipes yet. Add one!</p>
-      ) : (
-        recipes.map((recipe) => (
-          <div key={recipe.id} style={{ border: '1px solid #ddd', padding: 10, margin: '10px 0' }}>
-            <h3>{recipe.title}</h3>
-            <p>{recipe.description}</p>
-            <div style={{ display: 'flex', gap: 8 }}>
-              <Link to={`/recipes/${recipe.id}`}>View</Link>
-              <Link to={`/recipes/${recipe.id}/edit`}>Edit</Link>
-              <button onClick={() => deleteRecipe(recipe.id)}>Delete</button>
-            </div>
-          </div>
-        ))
-      )}
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      {filteredRecipes.map(recipe => (
+        <div key={recipe.id} className="border p-4 rounded shadow">
+          <h3 className="font-bold text-lg">{recipe.title}</h3>
+          <p>Preparation Time: {recipe.prepTime} mins</p>
+          <p>Ingredients: {recipe.ingredients.join(', ')}</p>
+        </div>
+      ))}
     </div>
   );
 };
