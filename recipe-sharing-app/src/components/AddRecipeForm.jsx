@@ -1,53 +1,33 @@
-// src/components/AddRecipeForm.jsx
-import React, { useState } from 'react';
-import { useRecipeStore } from '../store/recipeStore';
-import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { useRecipeStore } from '../recipeStore';
 
-const AddRecipeForm = () => {
+export default function AddRecipeForm() {
+  const addRecipe = useRecipeStore((state) => state.addRecipe);
   const [title, setTitle] = useState('');
-  const [prepTime, setPrepTime] = useState('');
-  const [ingredients, setIngredients] = useState('');
-  const setRecipes = useRecipeStore(state => state.setRecipes);
-  const recipes = useRecipeStore(state => state.recipes);
-  const navigate = useNavigate();
+  const [description, setDescription] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const newRecipe = {
-      id: Date.now(),
-      title,
-      prepTime: parseInt(prepTime),
-      ingredients: ingredients.split(',').map(i => i.trim())
-    };
-    setRecipes([...recipes, newRecipe]);
-    navigate('/');
+    if (!title.trim()) return;
+    addRecipe({ id: Date.now(), title, description });
+    setTitle('');
+    setDescription('');
   };
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-md mx-auto p-4 border rounded">
-      <h2 className="text-xl font-bold mb-4">Add New Recipe</h2>
+    <form onSubmit={handleSubmit}>
       <input
         type="text"
-        placeholder="Recipe Title"
+        placeholder="Title"
         value={title}
-        onChange={e => setTitle(e.target.value)}
-        className="w-full p-2 mb-2 border rounded"
-        required
+        onChange={(e) => setTitle(e.target.value)}
       />
-      <input
-        type="number"
-        placeholder="Preparation Time (mins)"
-        value={prepTime}
-        onChange={e => setPrepTime(e.target.value)}
-        className="w-full p-2 mb-2 border rounded"
-        required
+      <textarea
+        placeholder="Description"
+        value={description}
+        onChange={(e) => setDescription(e.target.value)}
       />
-      <input
-        type="text"
-        placeholder="Ingredients (comma separated)"
-        value={ingredients}
-        onChange={e => setIngredients(e.target.value)}
-        className="w-full p-2 mb-2 border rounded"
-        required
-      />
-      <button type="submit" className="bg-blue-500 text-white p
+      <button type="submit">Add Recipe</button>
+    </form>
+  );
+}
