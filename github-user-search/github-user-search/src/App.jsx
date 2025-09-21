@@ -58,3 +58,6 @@ export default function App() {
     </div>
   );
 }
+
+import { searchUsers } from './services/githubService';
+const users = await searchUsers('malak');
