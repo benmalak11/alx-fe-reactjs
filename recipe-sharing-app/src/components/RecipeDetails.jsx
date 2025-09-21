@@ -32,3 +32,34 @@ const RecipeDetail = () => {
 };
 
 export default RecipeDetail;
+import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useRecipeStore } from '../recipeStore';
+import DeleteRecipeButton from './DeleteRecipeButton';
+
+export default function RecipeDetails() {
+  const { id } = useParams();
+  const recipe = useRecipeStore((state) => state.recipes.find((r) => r.id === id));
+  const navigate = useNavigate();
+
+  if (!recipe) {
+    return (
+      <div>
+        <p>Recipe not found.</p>
+        <button onClick={() => navigate('/')}>Back to list</button>
+      </div>
+    );
+  }
+
+  return (
+    <div>
+      <h1>{recipe.title}</h1>
+      <p>{recipe.description}</p>
+
+      <div style={{ marginTop: 12 }}>
+        <Link to={`/edit/${recipe.id}`}><button>Edit</button></Link>
+        <DeleteRecipeButton recipeId={recipe.id} />
+        <button onClick={() => navigate(-1)}>Back</button>
+      </div>
+    </div>
+  );
+}
