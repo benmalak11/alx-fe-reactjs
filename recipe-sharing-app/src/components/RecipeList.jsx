@@ -55,3 +55,33 @@ export default function RecipeList() {
     </div>
   );
 }
+import { useRecipeStore } from '../recipeStore';
+
+export default function RecipeList() {
+  const filteredRecipes = useRecipeStore((state) => state.filteredRecipes);
+  const favorites = useRecipeStore((state) => state.favorites);
+  const addFavorite = useRecipeStore((state) => state.addFavorite);
+  const removeFavorite = useRecipeStore((state) => state.removeFavorite);
+
+  return (
+    <div>
+      {filteredRecipes.length === 0 && <p>No matching recipes found.</p>}
+      {filteredRecipes.map((recipe) => {
+        const isFav = favorites.includes(recipe.id);
+        return (
+          <div key={recipe.id} style={{ marginBottom: '16px' }}>
+            <h3>{recipe.title}</h3>
+            <p>{recipe.description}</p>
+            {isFav ? (
+              <button onClick={() => removeFavorite(recipe.id)}>
+                Remove Favorite
+              </button>
+            ) : (
+              <button onClick={() => addFavorite(recipe.id)}>Add Favorite</button>
+            )}
+          </div>
+        );
+      })}
+    </div>
+  );
+}

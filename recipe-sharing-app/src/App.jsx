@@ -70,3 +70,22 @@ export default function App() {
     </div>
   );
 }
+import React from 'react';
+import AddRecipeForm from './components/AddRecipeForm';
+import SearchBar from './components/SearchBar';
+import RecipeList from './components/RecipeList';
+import FavoritesList from './components/FavoritesList';
+import RecommendationsList from './components/RecommendationsList';
+
+export default function App() {
+  return (
+    <div style={{ padding: '20px' }}>
+      <h1>Recipe Sharing Application</h1>
+      <AddRecipeForm />
+      <SearchBar />
+      <RecipeList />
+      <FavoritesList />
+      <RecommendationsList />
+    </div>
+  );
+}
