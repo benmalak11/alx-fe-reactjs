@@ -2,6 +2,16 @@ import React, { useState } from 'react';
 import SearchBar from './components/SearchBar';
 import UserCard from './components/UserCard';
 import { searchUsers } from './services/githubService';
+import React from 'react';
+import Search from './components/Search';
+
+function App() {
+  return (
+    <div>
+      <Search />
+    </div>
+  );
+}
 
 export default function App() {
   const [users, setUsers] = useState([]);
@@ -22,3 +32,4 @@ export default function App() {
     </div>
   );
 }
+export default App;
