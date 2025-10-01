@@ -94,5 +94,14 @@ function HomePage() {
   );
 }
 
+import { Link } from "react-router-dom";
+// ...
+<Link
+  to="/add"
+  className="mb-6 inline-block px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+>
+  ➕ Add New Recipe
+</Link>
+
 
 export default HomePage;
