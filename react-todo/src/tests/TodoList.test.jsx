@@ -1,3 +1,4 @@
+// src/__tests__/TodoList.test.js
 import { render, screen, fireEvent } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import TodoList from "../components/TodoList";
@@ -14,10 +15,8 @@ describe("TodoList Component", () => {
     render(<TodoList />);
     const input = screen.getByPlaceholderText("Add new todo");
     const addButton = screen.getByText("Add");
-
     userEvent.type(input, "New Todo");
     fireEvent.click(addButton);
-
     expect(screen.getByText("New Todo")).toBeInTheDocument();
   });
 
@@ -25,16 +24,14 @@ describe("TodoList Component", () => {
     render(<TodoList />);
     const todo = screen.getByText("Learn React");
     fireEvent.click(todo);
-
     expect(todo).toHaveStyle("text-decoration: line-through");
   });
 
   test("deletes a todo", () => {
     render(<TodoList />);
     const todoText = screen.getByText("Build Todo App");
-    const deleteButton = todoText.nextSibling; // button next to text
+    const deleteButton = todoText.nextSibling;
     fireEvent.click(deleteButton);
-
     expect(screen.queryByText("Build Todo App")).not.toBeInTheDocument();
   });
 });
