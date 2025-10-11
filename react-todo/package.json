@@ -31,5 +31,8 @@
   "dev": "vite",
   "build": "vite build",
   "test": "jest --watchAll"
+},
+"scripts": {
+  "test": "jest --watchAll"
 }
   }
