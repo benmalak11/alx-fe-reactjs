@@ -29,9 +29,8 @@ describe("TodoList Component", () => {
 
   test("deletes a todo", () => {
     render(<TodoList />);
-    const todoText = screen.getByText("Build Todo App");
-    const deleteButton = todoText.nextSibling;
-    fireEvent.click(deleteButton);
+    const deleteBtn = screen.getByText("Build Todo App").nextSibling;
+    fireEvent.click(deleteBtn);
     expect(screen.queryByText("Build Todo App")).not.toBeInTheDocument();
   });
 });
