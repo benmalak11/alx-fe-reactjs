@@ -1,25 +1,13 @@
 import { useState } from "react";
 
 function RegistrationForm() {
-  const [formData, setFormData] = useState({
-    username: "",
-    email: "",
-    password: "",
-  });
-
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const { username, email, password } = formData;
 
     if (!username || !email || !password) {
       setError("All fields are required!");
@@ -27,12 +15,12 @@ function RegistrationForm() {
     }
 
     setError("");
-    console.log("User Registered:", formData);
+    console.log("User Registered:", { username, email, password });
 
-    // Simulate mock API call
+    // Simulate a mock API call
     fetch("https://jsonplaceholder.typicode.com/posts", {
       method: "POST",
-      body: JSON.stringify(formData),
+      body: JSON.stringify({ username, email, password }),
       headers: {
         "Content-type": "application/json; charset=UTF-8",
       },
@@ -50,8 +38,8 @@ function RegistrationForm() {
         type="text"
         name="username"
         placeholder="Username"
-        value={formData.username}
-        onChange={handleChange}
+        value={username}
+        onChange={(e) => setUsername(e.target.value)}
       />
       <br />
 
@@ -59,8 +47,8 @@ function RegistrationForm() {
         type="email"
         name="email"
         placeholder="Email"
-        value={formData.email}
-        onChange={handleChange}
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
       />
       <br />
 
@@ -68,8 +56,8 @@ function RegistrationForm() {
         type="password"
         name="password"
         placeholder="Password"
-        value={formData.password}
-        onChange={handleChange}
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
       />
       <br />
 
