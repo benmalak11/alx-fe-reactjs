@@ -43,5 +43,18 @@ function App() {
     </div>
   );
 }
+import FormikForm from "./components/formikForm";
+import RegistrationForm from "./components/RegistrationForm";
+
+function App() {
+  return (
+    <div style={{ textAlign: "center", padding: "20px" }}>
+      <RegistrationForm />
+      <hr />
+      <FormikForm />
+    </div>
+  );
+}
 
 export default App;
+
