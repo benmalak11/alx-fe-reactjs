@@ -1,6 +1,6 @@
 import { useQuery } from "react-query";
 
-// Fetching function
+// Fetch posts function
 const fetchPosts = async () => {
   const response = await fetch("https://jsonplaceholder.typicode.com/posts");
   if (!response.ok) {
@@ -10,13 +10,14 @@ const fetchPosts = async () => {
 };
 
 function PostsComponent() {
-  // useQuery handles data fetching, caching, and refetching
   const { data, error, isLoading, isError, refetch, isFetching } = useQuery(
     "posts",
     fetchPosts,
     {
-      staleTime: 60000, // Cache stays fresh for 1 minute
-      cacheTime: 300000, // Cache remains in memory for 5 minutes
+      staleTime: 60000, // cache is fresh for 1 minute
+      cacheTime: 300000, // cache stays in memory for 5 minutes
+      refetchOnWindowFocus: true, // refetch when user focuses window
+      keepPreviousData: true,       // keep old data while fetching new
     }
   );
 
