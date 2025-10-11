@@ -4,20 +4,33 @@ function RegistrationForm() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [errors, setErrors] = useState({});
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const newErrors = {};
 
-    if (!username || !email || !password) {
-      setError("All fields are required!");
+    // Basic validation logic
+    if (!username) {
+      newErrors.username = "Username is required";
+    }
+    if (!email) {
+      newErrors.email = "Email is required";
+    }
+    if (!password) {
+      newErrors.password = "Password is required";
+    }
+
+    setErrors(newErrors);
+
+    // Stop submission if any field is missing
+    if (Object.keys(newErrors).length > 0) {
       return;
     }
 
-    setError("");
     console.log("User Registered:", { username, email, password });
 
-    // Simulate a mock API call
+    // Simulate mock API call
     fetch("https://jsonplaceholder.typicode.com/posts", {
       method: "POST",
       body: JSON.stringify({ username, email, password }),
@@ -41,6 +54,7 @@ function RegistrationForm() {
         value={username}
         onChange={(e) => setUsername(e.target.value)}
       />
+      {errors.username && <p style={{ color: "red" }}>{errors.username}</p>}
       <br />
 
       <input
@@ -50,6 +64,7 @@ function RegistrationForm() {
         value={email}
         onChange={(e) => setEmail(e.target.value)}
       />
+      {errors.email && <p style={{ color: "red" }}>{errors.email}</p>}
       <br />
 
       <input
@@ -59,9 +74,9 @@ function RegistrationForm() {
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
+      {errors.password && <p style={{ color: "red" }}>{errors.password}</p>}
       <br />
 
-      {error && <p style={{ color: "red" }}>{error}</p>}
       <button type="submit">Register</button>
     </form>
   );
